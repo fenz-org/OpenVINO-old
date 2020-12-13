@@ -26,7 +26,9 @@ jobs:
       if: |
         commit_message =~ /^Build docker:*/
       script: |
+        echo "1"
         SW_NAME=`echo ${TRAVIS_REPO_SLUG##*/} | sed 's/ *$//g'`
+        echo ${SW_NAME}
         DOCKER_SW_NAME=${SW_NAME,,}
         SW_TAG=${TRAVIS_COMMIT_MESSAGE#*"Build docker:"}
         SW_TAG=`echo ${SW_TAG%%,*} | sed 's/ *$//g'`
