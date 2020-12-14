@@ -111,10 +111,11 @@ RUN apt-get update && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
 
-RUN wget -q https://dl.bintray.com/boostorg/release/1.73.0/source/boost_1_73_0.tar.bz2 && \
-   tar --bzip2 -xf boost_1_73_0.tar.bz2 && \
-   cd boost_1_73_0 && \
-   ./bootstrap.sh && \
-   ./b2 install && \
-   cd /tmp && \
-   rm -rf /tmp/boost*
+RUN export CPLUS_INCLUDE_PATH="$CPLUS_INCLUDE_PATH:/opt/conda/include/python3.7m/" && \
+    wget -q https://dl.bintray.com/boostorg/release/1.73.0/source/boost_1_73_0.tar.bz2 && \
+    tar --bzip2 -xf boost_1_73_0.tar.bz2 && \
+    cd boost_1_73_0 && \
+    ./bootstrap.sh && \
+    ./b2 install && \
+    cd /tmp && \
+    rm -rf /tmp/boost*
