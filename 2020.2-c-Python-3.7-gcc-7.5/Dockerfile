@@ -101,3 +101,20 @@ ENV PATH=$INSTALLDIR/deployment_tools/model_optimizer:$INSTALLDIR/data_processin
     PKG_CONFIG_PATH=$INSTALLDIR/data_processing/dl_streamer/lib/pkgconfig:$INSTALLDIR/data_processing/gstreamer/lib/pkgconfig \
     HDDL_INSTALL_DIR=$INSTALLDIR/deployment_tools/inference_engine/external/hddl \
     OPENVINO_DIR=$INSTALLDIR
+
+#Install Boost
+RUN apt-get update && \
+    apt-get install -y --no-install-recommends \
+        libicu-dev \
+        libbz2-dev \
+        liblzma-dev && \
+    apt-get clean && \
+    rm -rf /var/lib/apt/lists/*
+
+RUN wget -q https://dl.bintray.com/boostorg/release/1.73.0/source/boost_1_73_0.tar.bz2 && \
+   tar --bzip2 -xf boost_1_73_0.tar.bz2 && \
+   cd boost_1_73_0 && \
+   ./bootstrap.sh && \
+   ./b2 install && \
+   cd /tmp && \
+   rm -rf /tmp/boost*
