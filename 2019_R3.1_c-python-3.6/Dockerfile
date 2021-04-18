@@ -1,22 +1,11 @@
-ARG BASE_IMAGE=provarepro/openvino:2019_cpu_deps
+ARG BASE_IMAGE=provarepro/openvino:2019_R3.1_cpu_deps
 FROM ${BASE_IMAGE}
 
 USER root
 
 SHELL ["/bin/bash", "-xo", "pipefail", "-c"]
 
-RUN git clone \
-        --depth 1 \
-        --single-branch \
-        -b 2019_R3.1 \
-        https://github.com/openvinotoolkit/openvino.git && \
-    cd /openvino && \
-    git submodule update --init --recursive && \
-    cd inference-engine && \
-    ./install_dependencies.sh && \
-    cd /usr/bin/ && rm python && \
-    ln -s python3 python && \
-    cd /openvino/inference-engine && \
+RUN cd /openvino/inference-engine && \
     mkdir build && cd build && \
     cmake \
         -DCMAKE_BUILD_TYPE=Release \
