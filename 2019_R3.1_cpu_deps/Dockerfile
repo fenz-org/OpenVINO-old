@@ -26,7 +26,17 @@ RUN apt-get update && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
 
-RUN cd /usr/bin/ && \
+RUN git clone \
+        --depth 1 \
+        --single-branch \
+        -b 2019_R3.1 \
+        https://github.com/openvinotoolkit/openvino.git && \
+    cd /openvino && \
+    git submodule update --init --recursive && \
+    cd inference-engine && \
+    ./install_dependencies.sh
+
+RUN cd /usr/bin/ && rm python && \
     ln -s python3 python && \
     cd / && \
     curl https://bootstrap.pypa.io/get-pip.py -o /get-pip.py && \
